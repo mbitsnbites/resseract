@@ -1,0 +1,9 @@
+#!/bin/bash
+
+DATA_DIR=@PROJECT_SOURCE_DIR@/../data
+BIN_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+pushd ${DATA_DIR}
+${BIN_DIR}/resseract -u${HOME}/.resseract
+popd
+

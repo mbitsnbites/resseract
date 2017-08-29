@@ -86,6 +86,11 @@ add_executable(resseract ${CLIENT_SOURCES})
 target_include_directories(resseract PRIVATE ${CLIENT_INCLUDES})
 target_link_libraries(resseract ${CLIENT_LIBRARIES})
 
+# Resseract client launcher.
+if(UNIX)
+  configure_file("scripts/runclient.sh.in" "${CMAKE_CURRENT_BINARY_DIR}/runclient.sh" @ONLY)
+endif()
+
 # Server executable.
 set(SERVER_SOURCES
     shared/crypto.cpp
