@@ -1,4 +1,4 @@
-#include "game.h"
+#include "game/game.h"
 
 namespace game
 {
@@ -122,7 +122,7 @@ namespace game
         if(dead) gle::end();
     }
 
-    #include "ctf.h"
+    #include "game/ctf.h"
 
     clientmode *cmode = NULL;
     ctfclientmode ctfmode;
@@ -1917,7 +1917,7 @@ namespace game
             }
 
             #define PARSEMESSAGES 1
-            #include "ctf.h"
+            #include "game/ctf.h"
             #undef PARSEMESSAGES
 
             case N_NEWMAP:

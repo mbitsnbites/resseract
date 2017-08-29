@@ -2,6 +2,9 @@
 cmake_minimum_required(VERSION 3.5)
 project(Resseract)
 
+# Generate compile commands (compile_commands.json) for clang tooling etc.
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # Add zlib.
 find_package(ZLIB REQUIRED)
 
@@ -71,9 +74,7 @@ set(CLIENT_SOURCES
     game/weapon.cpp
   )
 set(CLIENT_INCLUDES
-    shared
-    engine
-    game
+    ${CMAKE_CURRENT_SOURCE_DIR}
     )
 set(CLIENT_LIBRARIES
     enet
@@ -103,9 +104,7 @@ set(SERVER_SOURCES
     game/server.cpp
     )
 set(SERVER_INCLUDES
-    shared
-    engine
-    game
+    ${CMAKE_CURRENT_SOURCE_DIR}
     )
 set(SERVER_LIBRARIES
     enet
@@ -125,9 +124,7 @@ set(MASTER_SOURCES
     engine/master.cpp
     )
 set(MASTER_INCLUDES
-    shared
-    engine
-    game
+    ${CMAKE_CURRENT_SOURCE_DIR}
     )
 set(MASTER_LIBRARIES
     enet

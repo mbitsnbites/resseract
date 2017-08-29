@@ -1,4 +1,4 @@
-#include "cube.h"
+#include "shared/cube.h"
 
 enum
 {

@@ -1,6 +1,6 @@
 // implementation of generic tools
 
-#include "cube.h"
+#include "shared/cube.h"
 
 void *operator new(size_t size)
 {

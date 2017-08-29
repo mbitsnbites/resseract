@@ -32,7 +32,7 @@
   #undef _WIN32_WINNT
   #endif
   #define _WIN32_WINNT 0x0500
-  #include "windows.h"
+  #include <windows.h>
   #ifndef _WINDOWS
     #define _WINDOWS
   #endif
@@ -46,7 +46,7 @@
 
 #ifndef STANDALONE
   #ifdef __APPLE__
-    #include "SDL2/SDL.h"
+    #include <SDL2/SDL.h>
     #define GL_GLEXT_LEGACY
     #define __glext_h_
     #include <OpenGL/gl.h>
@@ -61,18 +61,18 @@
 
 #include <zlib.h>
 
-#include "tools.h"
-#include "geom.h"
-#include "ents.h"
-#include "command.h"
+#include "shared/tools.h"
+#include "shared/geom.h"
+#include "shared/ents.h"
+#include "shared/command.h"
 
 #ifndef STANDALONE
-#include "glexts.h"
-#include "glemu.h"
+#include "shared/glexts.h"
+#include "shared/glemu.h"
 #endif
 
-#include "iengine.h"
-#include "igame.h"
+#include "shared/iengine.h"
+#include "shared/igame.h"
 
-#endif
+#endif  // __CUBE_H__
 

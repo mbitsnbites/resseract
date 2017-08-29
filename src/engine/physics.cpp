@@ -3,8 +3,8 @@
 // they "felt right", and have no basis in reality. Collision detection is simplistic but
 // very robust (uses discrete steps at fixed fps).
 
-#include "engine.h"
-#include "mpr.h"
+#include "engine/engine.h"
+#include "engine/mpr.h"
 
 const int MAXCLIPPLANES = 1024;
 static clipplanes clipcache[MAXCLIPPLANES];

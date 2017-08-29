@@ -1,5 +1,5 @@
 // creation of scoreboard
-#include "game.h"
+#include "game/game.h"
 
 namespace game
 {

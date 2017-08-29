@@ -1,4 +1,4 @@
-#include "game.h"
+#include "game/game.h"
 
 namespace game
 {
@@ -839,7 +839,7 @@ namespace server
     };
 
     #define SERVMODE 1
-    #include "ctf.h"
+    #include "game/ctf.h"
 
     ctfservmode ctfmode;
     servmode *smode = NULL;
@@ -3530,7 +3530,7 @@ namespace server
                 break;
 
             #define PARSEMESSAGES 1
-            #include "ctf.h"
+            #include "game/ctf.h"
             #undef PARSEMESSAGES
 
             case -1:
@@ -3565,7 +3565,7 @@ namespace server
     int masterport() { return RESSERACT_MASTER_PORT; }
     int numchannels() { return 3; }
 
-    #include "extinfo.h"
+    #include "game/extinfo.h"
 
     void serverinforeply(ucharbuf &req, ucharbuf &p)
     {
@@ -3594,6 +3594,6 @@ namespace server
 
     int protocolversion() { return PROTOCOL_VERSION; }
 
-    #include "aiman.h"
+    #include "game/aiman.h"
 }
 

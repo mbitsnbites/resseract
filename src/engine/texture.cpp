@@ -1,6 +1,6 @@
 // texture.cpp: texture slot management
 
-#include "engine.h"
+#include "engine/engine.h"
 
 #ifdef __APPLE__
   #include "SDL2_image/SDL_image.h"
@@ -12,25 +12,25 @@
 #define DEFPIXEL uint OP(r, 0);
 #define PIXELOP OP(r, 0);
 #define BPP 1
-#include "scale.h"
+#include "engine/scale.h"
 
 #define FUNCNAME(name) name##2
 #define DEFPIXEL uint OP(r, 0), OP(g, 1);
 #define PIXELOP OP(r, 0); OP(g, 1);
 #define BPP 2
-#include "scale.h"
+#include "engine/scale.h"
 
 #define FUNCNAME(name) name##3
 #define DEFPIXEL uint OP(r, 0), OP(g, 1), OP(b, 2);
 #define PIXELOP OP(r, 0); OP(g, 1); OP(b, 2);
 #define BPP 3
-#include "scale.h"
+#include "engine/scale.h"
 
 #define FUNCNAME(name) name##4
 #define DEFPIXEL uint OP(r, 0), OP(g, 1), OP(b, 2), OP(a, 3);
 #define PIXELOP OP(r, 0); OP(g, 1); OP(b, 2); OP(a, 3);
 #define BPP 4
-#include "scale.h"
+#include "engine/scale.h"
 
 static void scaletexture(uchar * RESTRICT src, uint sw, uint sh, uint bpp, uint pitch, uchar * RESTRICT dst, uint dw, uint dh)
 {

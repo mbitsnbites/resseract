@@ -1,6 +1,6 @@
 // main.cpp: initialisation & main loop
 
-#include "engine.h"
+#include "engine/engine.h"
 
 extern void cleargamma();
 

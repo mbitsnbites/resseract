@@ -1,4 +1,4 @@
-#include "cube.h"
+#include "shared/cube.h"
 
 extern int glversion;
 extern int intel_mapbufferrange_bug;

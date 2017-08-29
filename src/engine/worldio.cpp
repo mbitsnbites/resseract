@@ -1,6 +1,6 @@
 // worldio.cpp: loading & saving of maps and savegames
 
-#include "engine.h"
+#include "engine/engine.h"
 
 static void fixent(entity &e, int version)
 {

@@ -1,7 +1,7 @@
 #ifndef __GAME_H__
 #define __GAME_H__
 
-#include "cube.h"
+#include "shared/cube.h"
 
 // animations
 
@@ -280,7 +280,7 @@ static const struct guninfo { const char *name, *file, *vwep; int attacks[NUMACT
     { "pulse rifle", "pulserifle", "worldgun/pulserifle", { -1, ATK_PULSE_SHOOT, ATK_PULSE_MELEE } }
 };
 
-#include "ai.h"
+#include "game/ai.h"
 
 // inherited by gameent and server clients
 struct gamestate

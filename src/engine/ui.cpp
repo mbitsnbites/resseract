@@ -1,5 +1,5 @@
-#include "engine.h"
-#include "textedit.h"
+#include "engine/engine.h"
+#include "engine/textedit.h"
 
 namespace UI
 {

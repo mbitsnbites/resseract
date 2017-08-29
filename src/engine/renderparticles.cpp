@@ -1,6 +1,6 @@
 // renderparticles.cpp
 
-#include "engine.h"
+#include "engine/engine.h"
 
 Shader *particleshader = NULL, *particlenotextureshader = NULL, *particlesoftshader = NULL, *particletextshader = NULL;
 
@@ -825,9 +825,9 @@ typedef varenderer<PT_PART> quadrenderer;
 typedef varenderer<PT_TAPE> taperenderer;
 typedef varenderer<PT_TRAIL> trailrenderer;
 
-#include "explosion.h"
-#include "lensflare.h"
-#include "lightning.h"
+#include "engine/explosion.h"
+#include "engine/lensflare.h"
+#include "engine/lightning.h"
 
 struct softquadrenderer : quadrenderer
 {
