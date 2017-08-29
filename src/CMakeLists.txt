@@ -1,6 +1,6 @@
 # -*- mode: CMake; tab-width: 2; indent-tabs-mode: nil; -*-
 cmake_minimum_required(VERSION 3.5)
-project(Tesseract)
+project(Resseract)
 
 # Add zlib.
 find_package(ZLIB REQUIRED)
@@ -82,9 +82,9 @@ set(CLIENT_LIBRARIES
     ${ZLIB_LIBRARIES}
     ${PLATFORM_LIBRARIES}
     )
-add_executable(tesseract ${CLIENT_SOURCES})
-target_include_directories(tesseract PRIVATE ${CLIENT_INCLUDES})
-target_link_libraries(tesseract ${CLIENT_LIBRARIES})
+add_executable(resseract ${CLIENT_SOURCES})
+target_include_directories(resseract PRIVATE ${CLIENT_INCLUDES})
+target_link_libraries(resseract ${CLIENT_LIBRARIES})
 
 # Server executable.
 set(SERVER_SOURCES
@@ -106,10 +106,10 @@ set(SERVER_LIBRARIES
     enet
     ${ZLIB_LIBRARIES}
     )
-add_executable(tess_server ${SERVER_SOURCES})
-target_compile_definitions(tess_server PRIVATE -DSTANDALONE)
-target_include_directories(tess_server PRIVATE ${SERVER_INCLUDES})
-target_link_libraries(tess_server ${SERVER_LIBRARIES})
+add_executable(ress_server ${SERVER_SOURCES})
+target_compile_definitions(ress_server PRIVATE -DSTANDALONE)
+target_include_directories(ress_server PRIVATE ${SERVER_INCLUDES})
+target_link_libraries(ress_server ${SERVER_LIBRARIES})
 
 # Master executable.
 set(MASTER_SOURCES
@@ -128,8 +128,8 @@ set(MASTER_LIBRARIES
     enet
     ${ZLIB_LIBRARIES}
     )
-add_executable(tess_master ${MASTER_SOURCES})
-target_compile_definitions(tess_master PRIVATE -DSTANDALONE)
-target_include_directories(tess_master PRIVATE ${MASTER_INCLUDES})
-target_link_libraries(tess_master ${MASTER_LIBRARIES})
+add_executable(ress_master ${MASTER_SOURCES})
+target_compile_definitions(ress_master PRIVATE -DSTANDALONE)
+target_include_directories(ress_master PRIVATE ${MASTER_INCLUDES})
+target_link_libraries(ress_master ${MASTER_LIBRARIES})
 
