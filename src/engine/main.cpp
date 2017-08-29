@@ -1002,6 +1002,11 @@ int getclockmillis()
 
 VAR(numcpus, 1, 1, 16);
 
+// On macOS SDL defines main as SDL_main.
+#ifdef main
+#undef main
+#endif
+
 int main(int argc, char **argv)
 {
     #ifdef WIN32
@@ -1220,3 +1225,15 @@ int main(int argc, char **argv)
     } __except(stackdumper(0, GetExceptionInformation()), EXCEPTION_CONTINUE_SEARCH) { return 0; }
     #endif
 }
+
+// This is a quick workaround for making things run under macOS.
+// TODO(m): Do something more fancy for parsing command line arguments etc.
+#if defined(APPLE)
+void _main()
+{
+  char* argv[2] = {"tesseract", NULL};
+  int argc = 1;
+  main(argc, argv);
+}
+#endif
+
