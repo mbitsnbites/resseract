@@ -43,6 +43,11 @@ static bool loadmapheader(stream *f, const char *ogzname, mapheader &hdr, octahe
     return true;
 }
 
+bool supportedgametype(const string &gametype)
+{
+    return (strcmp(gametype, game::gameident()) == 0) || (strcmp(gametype, "Tesseract") == 0);
+}
+
 bool loadents(const char *fname, vector<entity> &ents, uint *crc)
 {
     defformatstring(ogzname, "media/map/%s.ogz", fname);
@@ -71,7 +76,7 @@ bool loadents(const char *fname, vector<entity> &ents, uint *crc)
     int len = f->getchar();
     if(len >= 0) f->read(gametype, len+1);
     gametype[max(len, 0)] = '\0';
-    if(strcmp(gametype, game::gameident()))
+    if(!supportedgametype(gametype))
     {
         samegame = false;
         conoutf(CON_WARN, "WARNING: loading map from %s game, ignoring entities except for lights/mapmodels", gametype);
@@ -761,7 +766,7 @@ bool load_world(const char *mname, const char *cname)        // still supports a
     int len = f->getchar();
     if(len >= 0) f->read(gametype, len+1);
     gametype[max(len, 0)] = '\0';
-    if(strcmp(gametype, game::gameident())!=0)
+    if(!supportedgametype(gametype))
     {
         samegame = false;
         conoutf(CON_WARN, "WARNING: loading map from %s game, ignoring entities except for lights/mapmodels", gametype);
