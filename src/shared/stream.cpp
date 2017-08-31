@@ -1,5 +1,14 @@
 #include "shared/cube.h"
 
+#ifdef _WIN32
+#include <Shlobj.h>
+#include <stdlib.h>
+#else
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+#endif
+
 ///////////////////////// character conversion ///////////////
 
 #define CUBECTYPE(s, p, d, a, A, u, U) \
@@ -396,6 +405,37 @@ const char *sethomedir(const char *dir)
     if(!subhomedir(pdir, sizeof(pdir), dir) || !fixpackagedir(pdir)) return NULL;
     copystring(homedir, pdir);
     return homedir;
+}
+
+const char *setdefaulthomedir()
+{
+    const char *dir;
+    const char *subdir;
+#ifdef _WIN32
+    CHAR appdatadir[MAX_PATH];
+    if (SHGetSpecialFolderPath(NULL, appdatadir, CSIDL_APPDATA, false))
+    {
+        dir = appdatadir;
+    }
+    else
+    {
+        dir = getenv("APPDATA");
+    }
+    if(!dir)
+    {
+        dir ="C:";
+    }
+    subdir = "\\.resseract";
+#else
+    if ((dir = getenv("HOME")) == NULL) {
+        dir = getpwuid(getuid())->pw_dir;
+    }
+    subdir = "/.resseract";
+#endif
+    string pdir;
+    copystring(pdir, dir);
+    concatstring(pdir, subdir);
+    return sethomedir(pdir);
 }
 
 const char *addpackagedir(const char *dir)

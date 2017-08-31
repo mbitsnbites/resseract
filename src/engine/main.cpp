@@ -2,6 +2,8 @@
 
 #include "engine/engine.h"
 
+#include <cstdio>
+
 extern void cleargamma();
 
 void cleanup()
@@ -1007,6 +1009,22 @@ VAR(numcpus, 1, 1, 16);
 #undef main
 #endif
 
+void showusage(const char *prgname)
+{
+    std::printf("Usage: %s [options] [game options]\n\n", prgname);
+    std::printf("Options:\n");
+    std::printf(" -?, --help   Show this help\n");
+    std::printf(" -u<PATH>     Set the home directory\n");
+    std::printf(" -g<FILE>     Set the log file\n");
+    std::printf(" -k<PATH>     Add a package directory\n");
+    std::printf(" -d[MODE]     Set dedicated mode (0, 1 or 2)\n");
+    std::printf(" -w<WIDTH>    Set screen width\n");
+    std::printf(" -h<HEIGHT>   Set screen height\n");
+    std::printf(" -f<MODE>     Set fullscreen mode (0 or 1)\n");
+    std::printf(" -l<FILE>     Load a specific map\n");
+    std::printf(" -x<FILE>     Run a custom init script\n");
+}
+
 int main(int argc, char **argv)
 {
     #ifdef WIN32
@@ -1018,51 +1036,127 @@ int main(int argc, char **argv)
     #endif
     #endif
 
+    // Check if the user wants some help.
+    for(int i = 1; i<argc; i++)
+    {
+        if((strcmp(argv[i], "-?") == 0) ||
+           (strcmp(argv[i], "--help") == 0) ||
+           (strcmp(argv[i], "-h") == 0) ||
+           (strcmp(argv[i], "-help") == 0))
+        {
+            showusage(argv[0]);
+            exit(0);
+        }
+    }
+
     setlogfile(NULL);
 
     int dedicated = 0;
     char *load = NULL, *initscript = NULL;
 
     initing = INIT_RESET;
-    // set home dir first
-    for(int i = 1; i<argc; i++) if(argv[i][0]=='-' && argv[i][1] == 'u') { sethomedir(&argv[i][2]); break; }
-    // set log after home dir, but before anything else
-    for(int i = 1; i<argc; i++) if(argv[i][0]=='-' && argv[i][1] == 'g')
-    {
-        const char *file = argv[i][2] ? &argv[i][2] : "log.txt";
-        setlogfile(file);
-        logoutf("Setting log file: %s", file);
-        break;
-    }
-    execfile("config/init.cfg", false);
+
+    // Set home dir first.
+    setdefaulthomedir();
     for(int i = 1; i<argc; i++)
     {
-        if(argv[i][0]=='-') switch(argv[i][1])
+        if(argv[i][0]=='-' && argv[i][1] == 'u')
         {
-            case 'u': if(homedir[0]) logoutf("Using home directory: %s", homedir); break;
+            sethomedir(&argv[i][2]); break;
+        }
+    }
+    logoutf("Using home directory: %s", homedir);
+
+    // Set log after home dir, but before anything else.
+    for(int i = 1; i<argc; i++)
+    {
+        if(argv[i][0]=='-' && argv[i][1] == 'g')
+        {
+            const char *file = argv[i][2] ? &argv[i][2] : "log.txt";
+            setlogfile(file);
+            logoutf("Setting log file: %s", file);
+            break;
+        }
+    }
+
+    // Run the init script.
+    execfile("config/init.cfg", false);
+
+    // Command line arguments override init.cfg.
+    for(int i = 1; i<argc; i++)
+    {
+        if(argv[i][0]=='-')
+        {
+            switch(argv[i][1])
+            {
+            case 'u':
+                // Already handled.
+                break;
+            case 'g':
+                // Already handled.
+                break;
             case 'k':
             {
                 const char *dir = addpackagedir(&argv[i][2]);
-                if(dir) logoutf("Adding package directory: %s", dir);
+                if(dir)
+                {
+                    logoutf("Adding package directory: %s", dir);
+                }
                 break;
             }
-            case 'g': break;
-            case 'd': dedicated = atoi(&argv[i][2]); if(dedicated<=0) dedicated = 2; break;
-            case 'w': scr_w = clamp(atoi(&argv[i][2]), SCR_MINW, SCR_MAXW); if(!findarg(argc, argv, "-h")) scr_h = -1; break;
-            case 'h': scr_h = clamp(atoi(&argv[i][2]), SCR_MINH, SCR_MAXH); if(!findarg(argc, argv, "-w")) scr_w = -1; break;
-            case 'f': fullscreen = atoi(&argv[i][2]); break;
+            case 'd':
+                dedicated = atoi(&argv[i][2]);
+                if(dedicated<=0)
+                {
+                    dedicated = 2;
+                }
+                break;
+            case 'w':
+                scr_w = clamp(atoi(&argv[i][2]), SCR_MINW, SCR_MAXW);
+                if(!findarg(argc, argv, "-h"))
+                {
+                    scr_h = -1;
+                }
+                break;
+            case 'h':
+                scr_h = clamp(atoi(&argv[i][2]), SCR_MINH, SCR_MAXH);
+                if(!findarg(argc, argv, "-w"))
+                {
+                    scr_w = -1;
+                }
+                break;
+            case 'f':
+                fullscreen = atoi(&argv[i][2]);
+                break;
             case 'l':
             {
                 char pkgdir[] = "media/";
                 load = strstr(path(&argv[i][2]), path(pkgdir));
-                if(load) load += sizeof(pkgdir)-1;
-                else load = &argv[i][2];
+                if(load)
+                {
+                    load += sizeof(pkgdir)-1;
+                }
+                else
+                {
+                    load = &argv[i][2];
+                }
                 break;
             }
-            case 'x': initscript = &argv[i][2]; break;
-            default: if(!serveroption(argv[i])) gameargs.add(argv[i]); break;
+            case 'x':
+                initscript = &argv[i][2];
+                break;
+            default:
+                if(!serveroption(argv[i]))
+                {
+                    gameargs.add(argv[i]);
+                }
+                break;
+            }
         }
-        else gameargs.add(argv[i]);
+        else
+        {
+            gameargs.add(argv[i]);
+        }
     }
 
     numcpus = clamp(SDL_GetCPUCount(), 1, 16);

@@ -1357,6 +1357,7 @@ extern bool fileexists(const char *path, const char *mode);
 extern bool createdir(const char *path);
 extern size_t fixpackagedir(char *dir);
 extern const char *sethomedir(const char *dir);
+extern const char *setdefaulthomedir();
 extern const char *addpackagedir(const char *dir);
 extern const char *findfile(const char *filename, const char *mode);
 extern bool findzipfile(const char *filename);
