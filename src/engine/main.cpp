@@ -1267,6 +1267,7 @@ int main(int argc, char **argv)
     inputgrab(grabinput = true);
     ignoremousemotion();
 
+    // Main game loop.
     for(;;)
     {
         static int frames = 0;
