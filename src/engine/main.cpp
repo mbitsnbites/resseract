@@ -430,11 +430,25 @@ static void renderbackgroundview(int w,
 
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
-    float lh = 0.5f * min(w, h), lw = lh * 2, lx = 0.5f * (w - lw), ly = 0.5f * (h * 0.5f - lh);
-    settexture((maxtexsize ? min(maxtexsize, hwtexsize) : hwtexsize) >= 1024 && (hudw > 1280 || hudh > 800)
-                   ? "<premul>media/interface/logo_1024.png"
-                   : "<premul>media/interface/logo.png",
-               3);
+    const float lh = 0.2f * static_cast<float>(min(w, h));
+    const float lw = lh * (1500.0f / 320.0f);
+    const float lx = 0.5f * (static_cast<float>(w) - lw);
+    const float ly = 0.1f * lh;
+    const int texmax = (maxtexsize ? min(maxtexsize, hwtexsize) : hwtexsize);
+    const char* logo;
+    if ((texmax >= 1500) && (lw >= 1150.0f))
+    {
+        logo = "<premul>media/interface/logo_1500.png";
+    }
+    else if ((texmax >= 1024) && (lw >= 600.0f))
+    {
+        logo = "<premul>media/interface/logo_1024.png";
+    }
+    else
+    {
+        logo = "<premul>media/interface/logo_512.png";
+    }
+    settexture(logo, 3);
     bgquad(lx, ly, lw, lh);
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
