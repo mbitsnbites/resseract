@@ -666,7 +666,7 @@ namespace game
         float dist = to.dist(from);
         if(!(d->physstate >= PHYS_SLOPE && d->crouching && d->crouched()))
         {
-            vec kickback = vec(dir).mul(attacks[atk].kickamount*-2.5f);
+            vec kickback = vec(dir).mul(-0.5f * static_cast<float>(attacks[atk].kickamount));
             d->vel.add(kickback);
         }
         float shorten = attacks[atk].range && dist > attacks[atk].range ? attacks[atk].range : 0,

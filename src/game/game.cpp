@@ -323,7 +323,7 @@ namespace game
     }
     COMMAND(taunt, "");
 
-    VARP(hitsound, 0, 0, 1);
+    VARP(hitsound, 0, 1, 1);
 
     void damaged(int damage, gameent *d, gameent *actor, bool local)
     {
