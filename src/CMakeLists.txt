@@ -19,6 +19,12 @@ endif()
 # Add third party libraries (e.g. built from source).
 add_subdirectory(third_party)
 
+# Additional compiler flags.
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  # Silence warnings from Clang.
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-missing-exception-spec")
+endif()
+
 # Client executable.
 set(CLIENT_SOURCES
     shared/crypto.cpp

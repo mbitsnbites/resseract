@@ -13,22 +13,30 @@
 #include "engine/model.h"
 
 extern dynent *player;
-extern physent *camera1;                // special ent that acts as camera, same object as player1 in FPS mode
+extern physent *camera1;  // Special ent that acts as camera, same object as player1 in FPS mode.
 
-extern int worldscale, worldsize;
+extern int worldscale;
+extern int worldsize;
 extern int mapversion;
 extern char *maptitle;
 extern vector<ushort> texmru;
-extern int xtraverts, xtravertsva;
+extern int xtraverts;
+extern int xtravertsva;
 extern const ivec cubecoords[8];
 extern const ivec facecoords[6][4];
 extern const uchar fv[6][4];
 extern const uchar fvmasks[64];
 extern const uchar faceedgesidx[6][4];
-extern bool inbetweenframes, renderedframe;
+extern bool inbetweenframes;
+extern bool renderedframe;
 
 extern SDL_Window *screen;
-extern int screenw, screenh, renderw, renderh, hudw, hudh;
+extern int screenw;
+extern int screenh;
+extern int renderw;
+extern int renderh;
+extern int hudw;
+extern int hudh;
 
 extern vector<int> entgroup;
 
@@ -47,12 +55,17 @@ struct font
     int charoffset, defaultw, defaulth, scale;
     float bordermin, bordermax, outlinemin, outlinemax;
 
-    font() : name(NULL) {}
-    ~font() { DELETEA(name); }
+    font() : name(NULL)
+    {
+    }
+    ~font()
+    {
+        DELETEA(name);
+    }
 };
 
 #define FONTH (curfont->scale)
-#define FONTW (FONTH/2)
+#define FONTW (FONTH / 2)
 #define MINRESW 640
 #define MINRESH 480
 
@@ -64,10 +77,21 @@ extern float textscale;
 extern font *findfont(const char *name);
 extern void reloadfonts();
 
-static inline void setfont(font *f) { if(f) curfont = f; }
+static inline void setfont(font *f)
+{
+    if (f)
+    {
+        curfont = f;
+    }
+}
 
 // texture
-extern int hwtexsize, hwcubetexsize, hwmaxaniso, maxtexsize, hwtexunits, hwvtexunits;
+extern int hwtexsize;
+extern int hwcubetexsize;
+extern int hwmaxaniso;
+extern int maxtexsize;
+extern int hwtexunits;
+extern int hwvtexunits;
 
 extern Texture *textureload(const char *name, int clamp = 0, bool mipit = true, bool msg = true);
 extern int texalign(const void *data, int w, int bpp);
@@ -77,9 +101,37 @@ extern uchar *loadalphamask(Texture *t);
 extern Texture *cubemapload(const char *name, bool mipit = true, bool msg = true, bool transient = false);
 extern void drawcubemap(int size, const vec &o, float yaw, float pitch, const cubemapside &side, bool onlysky = false);
 extern void loadshaders();
-extern void setuptexparameters(int tnum, const void *pixels, int clamp, int filter, GLenum format = GL_RGB, GLenum target = GL_TEXTURE_2D, bool swizzle = false);
-extern void createtexture(int tnum, int w, int h, const void *pixels, int clamp, int filter, GLenum component = GL_RGB, GLenum target = GL_TEXTURE_2D, int pw = 0, int ph = 0, int pitch = 0, bool resize = true, GLenum format = GL_FALSE, bool swizzle = false);
-extern void create3dtexture(int tnum, int w, int h, int d, const void *pixels, int clamp, int filter, GLenum component = GL_RGB, GLenum target = GL_TEXTURE_3D, bool swizzle = false);
+extern void setuptexparameters(int tnum,
+                               const void *pixels,
+                               int clamp,
+                               int filter,
+                               GLenum format = GL_RGB,
+                               GLenum target = GL_TEXTURE_2D,
+                               bool swizzle = false);
+extern void createtexture(int tnum,
+                          int w,
+                          int h,
+                          const void *pixels,
+                          int clamp,
+                          int filter,
+                          GLenum component = GL_RGB,
+                          GLenum target = GL_TEXTURE_2D,
+                          int pw = 0,
+                          int ph = 0,
+                          int pitch = 0,
+                          bool resize = true,
+                          GLenum format = GL_FALSE,
+                          bool swizzle = false);
+extern void create3dtexture(int tnum,
+                            int w,
+                            int h,
+                            int d,
+                            const void *pixels,
+                            int clamp,
+                            int filter,
+                            GLenum component = GL_RGB,
+                            GLenum target = GL_TEXTURE_3D,
+                            bool swizzle = false);
 extern void blurtexture(int n, int bpp, int w, int h, uchar *dst, const uchar *src, int margin = 0);
 extern void blurnormals(int n, int w, int h, bvec *dst, const bvec *src, int margin = 0);
 extern GLuint setuppostfx(int w, int h, GLuint outfbo = 0);
@@ -120,22 +172,84 @@ static inline bool pvsoccluded(const ivec &bborigin, int size)
 }
 
 // rendergl
-extern bool hasVAO, hasTR, hasTSW, hasPBO, hasFBO, hasAFBO, hasDS, hasTF, hasCBF, hasS3TC, hasFXT1, hasLATC, hasRGTC, hasAF, hasFBB, hasFBMS, hasTMS, hasMSS, hasFBMSBS, hasUBO, hasMBR, hasDB2, hasDBB, hasTG, hasTQ, hasPF, hasTRG, hasTI, hasHFV, hasHFP, hasDBT, hasDC, hasDBGO, hasEGPU4, hasGPU4, hasGPU5, hasBFE, hasEAL, hasCR, hasOQ2, hasES3, hasCB, hasCI;
-extern int glversion, glslversion, glcompat;
-extern int maxdrawbufs, maxdualdrawbufs;
+extern bool hasVAO;
+extern bool hasTR;
+extern bool hasTSW;
+extern bool hasPBO;
+extern bool hasFBO;
+extern bool hasAFBO;
+extern bool hasDS;
+extern bool hasTF;
+extern bool hasCBF;
+extern bool hasS3TC;
+extern bool hasFXT1;
+extern bool hasLATC;
+extern bool hasRGTC;
+extern bool hasAF;
+extern bool hasFBB;
+extern bool hasFBMS;
+extern bool hasTMS;
+extern bool hasMSS;
+extern bool hasFBMSBS;
+extern bool hasUBO;
+extern bool hasMBR;
+extern bool hasDB2;
+extern bool hasDBB;
+extern bool hasTG;
+extern bool hasTQ;
+extern bool hasPF;
+extern bool hasTRG;
+extern bool hasTI;
+extern bool hasHFV;
+extern bool hasHFP;
+extern bool hasDBT;
+extern bool hasDC;
+extern bool hasDBGO;
+extern bool hasEGPU4;
+extern bool hasGPU4;
+extern bool hasGPU5;
+extern bool hasBFE;
+extern bool hasEAL;
+extern bool hasCR;
+extern bool hasOQ2;
+extern bool hasES3;
+extern bool hasCB;
+extern bool hasCI;
+extern int glversion;
+extern int glslversion;
+extern int glcompat;
+extern int maxdrawbufs;
+extern int maxdualdrawbufs;
 
-enum { DRAWTEX_NONE = 0, DRAWTEX_ENVMAP, DRAWTEX_MINIMAP, DRAWTEX_MODELPREVIEW };
+enum
+{
+    DRAWTEX_NONE = 0,
+    DRAWTEX_ENVMAP,
+    DRAWTEX_MINIMAP,
+    DRAWTEX_MODELPREVIEW
+};
 
-extern int vieww, viewh;
+extern int vieww;
+extern int viewh;
 extern int fov;
-extern float curfov, fovy, aspect, forceaspect;
+extern float curfov;
+extern float fovy;
+extern float aspect;
+extern float forceaspect;
 extern float nearplane;
 extern int farplane;
 extern bool hdrfloat;
-extern float ldrscale, ldrscaleb;
+extern float ldrscale;
+extern float ldrscaleb;
 extern int drawtex;
-extern const matrix4 viewmatrix, invviewmatrix;
-extern matrix4 cammatrix, projmatrix, camprojmatrix, invcammatrix, invcamprojmatrix, invprojmatrix;
+extern const matrix4 viewmatrix;
+extern const matrix4 invviewmatrix;
+extern matrix4 cammatrix;
+extern matrix4 projmatrix;
+extern matrix4 camprojmatrix;
+extern matrix4 invcammatrix;
+extern matrix4 invcamprojmatrix;
+extern matrix4 invprojmatrix;
 extern int fog;
 extern bvec fogcolour;
 extern vec curfogcolor;
@@ -144,7 +258,18 @@ extern int wireframe;
 extern int glerr;
 extern void glerror(const char *file, int line, GLenum error);
 
-#define GLERROR do { if(glerr) { GLenum error = glGetError(); if(error != GL_NO_ERROR) glerror(__FILE__, __LINE__, error); } } while(0)
+#define GLERROR                                     \
+    do                                              \
+    {                                               \
+        if (glerr)                                  \
+        {                                           \
+            GLenum error = glGetError();            \
+            if (error != GL_NO_ERROR)               \
+            {                                       \
+                glerror(__FILE__, __LINE__, error); \
+            }                                       \
+        }                                           \
+    } while (0)
 
 extern void gl_checkextensions();
 extern void gl_init();
@@ -158,9 +283,27 @@ extern void cleanupgl();
 extern void drawminimap();
 extern void enablepolygonoffset(GLenum type);
 extern void disablepolygonoffset(GLenum type);
-extern bool calcspherescissor(const vec &center, float size, float &sx1, float &sy1, float &sx2, float &sy2, float &sz1, float &sz2);
+extern bool calcspherescissor(const vec &center,
+                              float size,
+                              float &sx1,
+                              float &sy1,
+                              float &sx2,
+                              float &sy2,
+                              float &sz1,
+                              float &sz2);
 extern bool calcbbscissor(const ivec &bbmin, const ivec &bbmax, float &sx1, float &sy1, float &sx2, float &sy2);
-extern bool calcspotscissor(const vec &origin, float radius, const vec &dir, int spot, const vec &spotx, const vec &spoty, float &sx1, float &sy1, float &sx2, float &sy2, float &sz1, float &sz2);
+extern bool calcspotscissor(const vec &origin,
+                            float radius,
+                            const vec &dir,
+                            int spot,
+                            const vec &spotx,
+                            const vec &spoty,
+                            float &sx1,
+                            float &sy1,
+                            float &sx2,
+                            float &sy2,
+                            float &sz1,
+                            float &sz2);
 extern void screenquad();
 extern void screenquad(float sw, float sh);
 extern void screenquadflipped(float sw, float sh);
@@ -170,7 +313,7 @@ extern void screenquadoffset(float x, float y, float w, float h, float x2, float
 extern void hudquad(float x, float y, float w, float h, float tx = 0, float ty = 0, float tw = 1, float th = 1);
 extern void debugquad(float x, float y, float w, float h, float tx = 0, float ty = 0, float tw = 1, float th = 1);
 extern void recomputecamera();
-extern float calcfrustumboundsphere(float nearplane, float farplane,  const vec &pos, const vec &view, vec &center);
+extern float calcfrustumboundsphere(float nearplane, float farplane, const vec &pos, const vec &view, vec &center);
 extern void setfogcolor(const vec &v);
 extern void zerofogcolor();
 extern void resetfogcolor();
@@ -210,11 +353,16 @@ extern int lusize;
 extern cube &lookupcube(const ivec &to, int tsize = 0, ivec &ro = lu, int &rsize = lusize);
 extern const cube *neighbourstack[32];
 extern int neighbourdepth;
-extern const cube &neighbourcube(const cube &c, int orient, const ivec &co, int size, ivec &ro = lu, int &rsize = lusize);
+extern const cube &neighbourcube(const cube &c,
+                                 int orient,
+                                 const ivec &co,
+                                 int size,
+                                 ivec &ro = lu,
+                                 int &rsize = lusize);
 extern void resetclipplanes();
 extern int getmippedtexture(const cube &p, int orient);
 extern void forcemip(cube &c, bool fixtex = true);
-extern bool subdividecube(cube &c, bool fullcheck=true, bool brighten=true);
+extern bool subdividecube(cube &c, bool fullcheck = true, bool brighten = true);
 extern int faceconvexity(const ivec v[4]);
 extern int faceconvexity(const ivec v[4], int &vis);
 extern int faceconvexity(const vertinfo *verts, int numverts, int size);
@@ -228,16 +376,34 @@ extern bool flataxisface(const cube &c, int orient);
 extern bool collideface(const cube &c, int orient);
 extern int genclipplane(const cube &c, int i, vec *v, plane *clip);
 extern void genclipplanes(const cube &c, const ivec &co, int size, clipplanes &p, bool collide = true);
-extern bool visibleface(const cube &c, int orient, const ivec &co, int size, ushort mat = MAT_AIR, ushort nmat = MAT_AIR, ushort matmask = MATF_VOLUME);
+extern bool visibleface(const cube &c,
+                        int orient,
+                        const ivec &co,
+                        int size,
+                        ushort mat = MAT_AIR,
+                        ushort nmat = MAT_AIR,
+                        ushort matmask = MATF_VOLUME);
 extern int classifyface(const cube &c, int orient, const ivec &co, int size);
-extern int visibletris(const cube &c, int orient, const ivec &co, int size, ushort nmat = MAT_ALPHA, ushort matmask = MAT_ALPHA);
+extern int visibletris(const cube &c,
+                       int orient,
+                       const ivec &co,
+                       int size,
+                       ushort nmat = MAT_ALPHA,
+                       ushort matmask = MAT_ALPHA);
 extern int visibleorient(const cube &c, int orient);
 extern void genfaceverts(const cube &c, int orient, ivec v[4]);
 extern int calcmergedsize(int orient, const ivec &co, int size, const vertinfo *verts, int numverts);
 extern void invalidatemerges(cube &c, const ivec &co, int size, bool msg);
 extern void calcmerges();
 extern int mergefaces(int orient, facebounds *m, int sz);
-extern void mincubeface(const cube &cu, int orient, const ivec &o, int size, const facebounds &orig, facebounds &cf, ushort nmat = MAT_AIR, ushort matmask = MATF_VOLUME);
+extern void mincubeface(const cube &cu,
+                        int orient,
+                        const ivec &o,
+                        int size,
+                        const facebounds &orig,
+                        facebounds &cf,
+                        ushort nmat = MAT_AIR,
+                        ushort matmask = MATF_VOLUME);
 extern void remip();
 
 static inline cubeext &ext(cube &c)
@@ -250,15 +416,20 @@ static inline cubeext &ext(cube &c)
 #define LIGHTTILE_MAXW 16
 #define LIGHTTILE_MAXH 16
 
-extern int lighttilealignw, lighttilealignh, lighttilevieww, lighttileviewh, lighttilew, lighttileh;
+extern int lighttilealignw;
+extern int lighttilealignh;
+extern int lighttilevieww;
+extern int lighttileviewh;
+extern int lighttilew;
+extern int lighttileh;
 
-template<class T>
+template <class T>
 static inline void calctilebounds(float sx1, float sy1, float sx2, float sy2, T &bx1, T &by1, T &bx2, T &by2)
 {
-    int tx1 = max(int(floor(((sx1 + 1)*0.5f*vieww)/lighttilealignw)), 0),
-        ty1 = max(int(floor(((sy1 + 1)*0.5f*viewh)/lighttilealignh)), 0),
-        tx2 = min(int(ceil(((sx2 + 1)*0.5f*vieww)/lighttilealignw)), lighttilevieww),
-        ty2 = min(int(ceil(((sy2 + 1)*0.5f*viewh)/lighttilealignh)), lighttileviewh);
+    int tx1 = max(int(floor(((sx1 + 1) * 0.5f * vieww) / lighttilealignw)), 0),
+        ty1 = max(int(floor(((sy1 + 1) * 0.5f * viewh) / lighttilealignh)), 0),
+        tx2 = min(int(ceil(((sx2 + 1) * 0.5f * vieww) / lighttilealignw)), lighttilevieww),
+        ty2 = min(int(ceil(((sy2 + 1) * 0.5f * viewh) / lighttilealignh)), lighttileviewh);
     bx1 = T((tx1 * lighttilew) / lighttilevieww);
     by1 = T((ty1 * lighttileh) / lighttileviewh);
     bx2 = T((tx2 * lighttilew + lighttilevieww - 1) / lighttilevieww);
@@ -269,16 +440,27 @@ static inline void masktiles(uint *tiles, float sx1, float sy1, float sx2, float
 {
     int tx1, ty1, tx2, ty2;
     calctilebounds(sx1, sy1, sx2, sy2, tx1, ty1, tx2, ty2);
-    for(int ty = ty1; ty < ty2; ty++) tiles[ty] |= ((1<<(tx2-tx1))-1)<<tx1;
+    for (int ty = ty1; ty < ty2; ty++)
+        tiles[ty] |= ((1 << (tx2 - tx1)) - 1) << tx1;
 }
 
-enum { SM_NONE = 0, SM_REFLECT, SM_CUBEMAP, SM_CASCADE, SM_SPOT };
+enum
+{
+    SM_NONE = 0,
+    SM_REFLECT,
+    SM_CUBEMAP,
+    SM_CASCADE,
+    SM_SPOT
+};
 
 extern int shadowmapping;
 
-extern vec shadoworigin, shadowdir;
-extern float shadowradius, shadowbias;
-extern int shadowside, shadowspot;
+extern vec shadoworigin;
+extern vec shadowdir;
+extern float shadowradius;
+extern float shadowbias;
+extern int shadowside;
+extern int shadowspot;
 extern matrix4 shadowmatrix;
 
 extern void loaddeferredlightshaders();
@@ -315,8 +497,8 @@ extern int calcspherersmsplits(const vec &center, float radius);
 static inline bool sphereinsidespot(const vec &dir, int spot, const vec &center, float radius)
 {
     const vec2 &sc = sincos360[spot];
-    float cdist = dir.dot(center), cradius = radius + sc.y*cdist;
-    return sc.x*sc.x*(center.dot(center) - cdist*cdist) <= cradius*cradius;
+    float cdist = dir.dot(center), cradius = radius + sc.y * cdist;
+    return sc.x * sc.x * (center.dot(center) - cdist * cdist) <= cradius * cradius;
 }
 static inline bool bbinsidespot(const vec &origin, const vec &dir, int spot, const ivec &bbmin, const ivec &bbmax)
 {
@@ -326,12 +508,34 @@ static inline bool bbinsidespot(const vec &origin, const vec &dir, int spot, con
 
 extern matrix4 worldmatrix, screenmatrix;
 
-extern int gw, gh, gdepthformat, ghasstencil;
-extern GLuint gdepthtex, gcolortex, gnormaltex, gglowtex, gdepthrb, gstencilrb;
-extern int msaasamples, msaalight;
-extern GLuint msdepthtex, mscolortex, msnormaltex, msglowtex, msdepthrb, msstencilrb;
+extern int gw;
+extern int gh;
+extern int gdepthformat;
+extern int ghasstencil;
+extern GLuint gdepthtex;
+extern GLuint gcolortex;
+extern GLuint gnormaltex;
+extern GLuint gglowtex;
+extern GLuint gdepthrb;
+extern GLuint gstencilrb;
+extern int msaasamples;
+extern int msaalight;
+extern GLuint msdepthtex;
+extern GLuint mscolortex;
+extern GLuint msnormaltex;
+extern GLuint msglowtex;
+extern GLuint msdepthrb;
+extern GLuint msstencilrb;
 extern vector<vec2> msaapositions;
-enum { AA_UNUSED = 0, AA_LUMA, AA_MASKED, AA_SPLIT, AA_SPLIT_LUMA, AA_SPLIT_MASKED };
+enum
+{
+    AA_UNUSED = 0,
+    AA_LUMA,
+    AA_MASKED,
+    AA_SPLIT,
+    AA_SPLIT_LUMA,
+    AA_SPLIT_MASKED
+};
 
 extern void cleanupgbuffer();
 extern void initgbuffer();
@@ -348,7 +552,14 @@ extern void rendertransparent();
 extern void renderao();
 extern void loadhdrshaders(int aa = AA_UNUSED);
 extern void processhdr(GLuint outfbo = 0, int aa = AA_UNUSED);
-extern void copyhdr(int sw, int sh, GLuint fbo, int dw = 0, int dh = 0, bool flipx = false, bool flipy = false, bool swapxy = false);
+extern void copyhdr(int sw,
+                    int sh,
+                    GLuint fbo,
+                    int dw = 0,
+                    int dh = 0,
+                    bool flipx = false,
+                    bool flipy = false,
+                    bool swapxy = false);
 extern void setuplights();
 extern void setupgbuffer();
 extern GLuint shouldscale();
@@ -393,14 +604,24 @@ extern void changed(const block3 &sel, bool commit = true);
 extern void rendereditcursor();
 extern void tryedit();
 
-extern void renderprefab(const char *name, const vec &o, float yaw, float pitch, float roll, float size = 1, const vec &color = vec(1, 1, 1));
+extern void renderprefab(const char *name,
+                         const vec &o,
+                         float yaw,
+                         float pitch,
+                         float roll,
+                         float size = 1,
+                         const vec &color = vec(1, 1, 1));
 extern void previewprefab(const char *name, const vec &color);
 extern void cleanupprefabs();
 
 // octarender
-extern ivec worldmin, worldmax, nogimin, nogimax;
+extern ivec worldmin;
+extern ivec worldmax;
+extern ivec nogimin;
+extern ivec nogimax;
 extern vector<tjoint> tjoints;
-extern vector<vtxarray *> varoot, valist;
+extern vector<vtxarray *> varoot;
+extern vector<vtxarray *> valist;
 
 extern ushort encodenormal(const vec &n);
 extern vec decodenormal(ushort norm);
@@ -417,7 +638,18 @@ extern void updatevabbs(bool force = false);
 // renderva
 
 extern int oqfrags;
-extern float alphafrontsx1, alphafrontsx2, alphafrontsy1, alphafrontsy2, alphabacksx1, alphabacksx2, alphabacksy1, alphabacksy2, alpharefractsx1, alpharefractsx2, alpharefractsy1, alpharefractsy2;
+extern float alphafrontsx1;
+extern float alphafrontsx2;
+extern float alphafrontsy1;
+extern float alphafrontsy2;
+extern float alphabacksx1;
+extern float alphabacksx2;
+extern float alphabacksy1;
+extern float alphabacksy2;
+extern float alpharefractsx1;
+extern float alpharefractsx2;
+extern float alpharefractsy1;
+extern float alpharefractsy2;
 extern uint alphatiles[LIGHTTILE_MAXH];
 extern vtxarray *visibleva;
 
@@ -466,11 +698,26 @@ extern bool getdynlight(int n, vec &o, float &radius, vec &color, vec &dir, int 
 
 // material
 
-extern float matliquidsx1, matliquidsy1, matliquidsx2, matliquidsy2;
-extern float matsolidsx1, matsolidsy1, matsolidsx2, matsolidsy2;
-extern float matrefractsx1, matrefractsy1, matrefractsx2, matrefractsy2;
-extern uint matliquidtiles[LIGHTTILE_MAXH], matsolidtiles[LIGHTTILE_MAXH];
-extern vector<materialsurface> editsurfs, glasssurfs[4], watersurfs[4], waterfallsurfs[4], lavasurfs[4], lavafallsurfs[4];
+extern float matliquidsx1;
+extern float matliquidsy1;
+extern float matliquidsx2;
+extern float matliquidsy2;
+extern float matsolidsx1;
+extern float matsolidsy1;
+extern float matsolidsx2;
+extern float matsolidsy2;
+extern float matrefractsx1;
+extern float matrefractsy1;
+extern float matrefractsx2;
+extern float matrefractsy2;
+extern uint matliquidtiles[LIGHTTILE_MAXH];
+extern uint matsolidtiles[LIGHTTILE_MAXH];
+extern vector<materialsurface> editsurfs;
+extern vector<materialsurface> glasssurfs[4];
+extern vector<materialsurface> watersurfs[4];
+extern vector<materialsurface> waterfallsurfs[4];
+extern vector<materialsurface> lavasurfs[4];
+extern vector<materialsurface> lavafallsurfs[4];
 extern const vec matnormals[6];
 
 extern int showmat;
@@ -491,19 +738,29 @@ extern void renderminimapmaterials();
 extern int visiblematerial(const cube &c, int orient, const ivec &co, int size, ushort matmask = MATF_VOLUME);
 
 // water
-extern int vertwater, waterreflect, caustics;
-extern float watersx1, watersy1, watersx2, watersy2;
+extern int vertwater;
+extern int waterreflect;
+extern int caustics;
+extern float watersx1;
+extern float watersy1;
+extern float watersx2;
+extern float watersy2;
 
 #define GETMATIDXVAR(name, var, type) \
-    type get##name##var(int mat) \
-    { \
-        switch(mat&MATF_INDEX) \
-        { \
-            default: case 0: return name##var; \
-            case 1: return name##2##var; \
-            case 2: return name##3##var; \
-            case 3: return name##4##var; \
-        } \
+    type get##name##var(int mat)      \
+    {                                 \
+        switch (mat & MATF_INDEX)     \
+        {                             \
+            default:                  \
+            case 0:                   \
+                return name##var;     \
+            case 1:                   \
+                return name##2##var;  \
+            case 2:                   \
+                return name##3##var;  \
+            case 3:                   \
+                return name##4##var;  \
+        }                             \
     }
 
 extern const bvec &getwatercolour(int mat);
@@ -599,35 +856,47 @@ enum
     INIT_LOAD,
     INIT_RESET
 };
-extern int initing, numcpus;
+extern int initing;
+extern int numcpus;
 
 enum
 {
-    CHANGE_GFX     = 1<<0,
-    CHANGE_SOUND   = 1<<1,
-    CHANGE_SHADERS = 1<<2
+    CHANGE_GFX = 1 << 0,
+    CHANGE_SOUND = 1 << 1,
+    CHANGE_SHADERS = 1 << 2
 };
 extern bool initwarning(const char *desc, int level = INIT_RESET, int type = CHANGE_GFX);
 
-extern bool grabinput, minimized;
+extern bool grabinput;
+extern bool minimized;
 
-extern void pushevent(const SDL_Event &e);
 extern bool interceptkey(int sym);
 
 extern float loadprogress;
-extern void renderbackground(const char *caption = NULL, Texture *mapshot = NULL, const char *mapname = NULL, const char *mapinfo = NULL, bool force = false);
+extern void renderbackground(const char *caption = NULL,
+                             Texture *mapshot = NULL,
+                             const char *mapname = NULL,
+                             const char *mapinfo = NULL,
+                             bool force = false);
 extern void renderprogress(float bar, const char *text, bool background = false);
 
-extern void getframemillis(float &avg, float &best, float &worst);
 extern void getfps(int &fps, int &bestdiff, int &worstdiff);
-extern void swapbuffers(bool overlay = true);
 extern int getclockmillis();
 
-enum { KR_CONSOLE = 1<<0, KR_GUI = 1<<1, KR_EDITMODE = 1<<2 };
+enum
+{
+    KR_CONSOLE = 1 << 0,
+    KR_GUI = 1 << 1,
+    KR_EDITMODE = 1 << 2
+};
 
 extern void keyrepeat(bool on, int mask = ~0);
 
-enum { TI_CONSOLE = 1<<0, TI_GUI = 1<<1 };
+enum
+{
+    TI_CONSOLE = 1 << 0,
+    TI_GUI = 1 << 1
+};
 
 extern void textinput(bool on, int mask = ~0);
 
@@ -653,11 +922,18 @@ extern void resetmap();
 extern void startmap(const char *name);
 
 // rendermodel
-struct mapmodelinfo { string name; model *m, *collide; };
+struct mapmodelinfo
+{
+    string name;
+    model *m, *collide;
+};
 
 extern vector<mapmodelinfo> mapmodels;
 
-extern float transmdlsx1, transmdlsy1, transmdlsx2, transmdlsy2;
+extern float transmdlsx1;
+extern float transmdlsy1;
+extern float transmdlsx2;
+extern float transmdlsy2;
 extern uint transmdltiles[LIGHTTILE_MAXH];
 
 extern void loadskin(const char *dir, const char *altdir, Texture *&skin, Texture *&masks);
@@ -669,7 +945,15 @@ extern void shadowmaskbatchedmodels(bool dynshadow = true);
 extern void rendermapmodelbatches();
 extern void rendermodelbatches();
 extern void rendertransparentmodelbatches(int stencil = 0);
-extern void rendermapmodel(int idx, int anim, const vec &o, float yaw = 0, float pitch = 0, float roll = 0, int flags = MDL_CULL_VFC | MDL_CULL_DIST, int basetime = 0, float size = 1);
+extern void rendermapmodel(int idx,
+                           int anim,
+                           const vec &o,
+                           float yaw = 0,
+                           float pitch = 0,
+                           float roll = 0,
+                           int flags = MDL_CULL_VFC | MDL_CULL_DIST,
+                           int basetime = 0,
+                           float size = 1);
 extern void clearbatchedmapmodels();
 extern void preloadusedmapmodels(bool msg = false, bool bih = false);
 extern int batcheddynamicmodels();
@@ -678,7 +962,7 @@ extern void cleanupmodels();
 
 static inline model *loadmapmodel(int n)
 {
-    if(mapmodels.inrange(n))
+    if (mapmodels.inrange(n))
     {
         model *m = mapmodels[n].m;
         return m ? m : loadmodel(NULL, n);
@@ -686,12 +970,21 @@ static inline model *loadmapmodel(int n)
     return NULL;
 }
 
-static inline mapmodelinfo *getmminfo(int n) { return mapmodels.inrange(n) ? &mapmodels[n] : NULL; }
+static inline mapmodelinfo *getmminfo(int n)
+{
+    return mapmodels.inrange(n) ? &mapmodels[n] : NULL;
+}
 
 // renderparticles
 extern int particlelayers;
 
-enum { PL_ALL = 0, PL_UNDER, PL_OVER, PL_NOLAYER };
+enum
+{
+    PL_ALL = 0,
+    PL_UNDER,
+    PL_OVER,
+    PL_NOLAYER
+};
 
 extern void initparticles();
 extern void clearparticles();
@@ -704,7 +997,13 @@ extern bool printparticles(extentity &e, char *buf, int len);
 extern void cleanupparticles();
 
 // stain
-enum { STAINBUF_OPAQUE = 0, STAINBUF_TRANSPARENT, STAINBUF_MAPMODEL, NUMSTAINBUFS };
+enum
+{
+    STAINBUF_OPAQUE = 0,
+    STAINBUF_TRANSPARENT,
+    STAINBUF_MAPMODEL,
+    NUMSTAINBUFS
+};
 
 struct stainrenderer;
 
@@ -715,7 +1014,9 @@ extern void cleanupstains();
 extern void genstainmmtri(stainrenderer *s, const vec v[3]);
 
 // rendersky
-extern int skytexture, skyshadow, explicitsky;
+extern int skytexture;
+extern int skyshadow;
+extern int explicitsky;
 
 extern void drawskybox(bool clear = false);
 extern bool hasskybox();
@@ -802,7 +1103,6 @@ namespace recorder
     extern void cleanup();
 }
 
-#endif
+#endif  // STANDALONE
 
-#endif
-
+#endif  // __ENGINE_H__

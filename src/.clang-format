@@ -3,13 +3,14 @@ Language: Cpp
 Standard: Cpp03
 BasedOnStyle: Chromium
 AccessModifierOffset: -2
-AllowShortFunctionsOnASingleLine: All
-AllowShortIfStatementsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: false
 BinPackArguments: false
 BreakBeforeBraces: Allman
 ColumnLimit: 120
 IndentWidth: 4
 NamespaceIndentation: All
 PointerAlignment: Right
+SortIncludes: false
 ...
 
