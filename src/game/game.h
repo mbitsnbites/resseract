@@ -167,6 +167,7 @@ enum
     S_WEAPLOAD,
     S_NOAMMO,
     S_HIT,
+    S_HITTEAM,
     S_PAIN1,
     S_PAIN2,
     S_DIE1,

@@ -298,12 +298,21 @@ namespace game
 #endif
     }
 
+    // Check if an entity is a player on the same team as player1.
+    static bool sameteam(dynent *other)
+    {
+        return other->type == ENT_PLAYER && validteam(player1->team) && ((gameent *)other)->team == player1->team;
+    }
+
     void hit(int damage, dynent *d, gameent *at, const vec &vel, int atk, float info1, int info2 = 1)
     {
-        if(at==player1 && d!=at)
+        if (at == player1 && d != at)
         {
             extern int hitsound;
-            if(hitsound && lasthit != lastmillis) playsound(S_HIT);
+            if (hitsound && lasthit != lastmillis)
+            {
+                playsound(sameteam(d) ? S_HITTEAM : S_HIT);
+            }
             lasthit = lastmillis;
         }
 
