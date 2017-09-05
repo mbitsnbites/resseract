@@ -1234,10 +1234,15 @@ void resetgl()
     gl_init();
 
     inbetweenframes = false;
-    if (!reloadtexture(*notexture) || !reloadtexture("<premul>media/interface/logo.png") ||
-        !reloadtexture("<premul>media/interface/logo_1024.png") || !reloadtexture("media/interface/background.png") ||
-        !reloadtexture("media/interface/shadow.png") || !reloadtexture("media/interface/mapshot_frame.png") ||
-        !reloadtexture("media/interface/loading_frame.png") || !reloadtexture("media/interface/loading_bar.png"))
+    if (!reloadtexture(*notexture) ||
+        !reloadtexture("<premul>media/interface/logo_512.png") ||
+        !reloadtexture("<premul>media/interface/logo_1024.png") ||
+        !reloadtexture("<premul>media/interface/logo_1500.png") ||
+        !reloadtexture("media/interface/background.png") ||
+        !reloadtexture("media/interface/shadow.png") ||
+        !reloadtexture("media/interface/mapshot_frame.png") ||
+        !reloadtexture("media/interface/loading_frame.png") ||
+        !reloadtexture("media/interface/loading_bar.png"))
     {
         fatal("failed to reload core texture");
     }
