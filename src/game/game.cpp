@@ -354,6 +354,13 @@ namespace game
 
     VARP(deathscore, 0, 1, 1);
 
+    static int randomdeathsound()
+    {
+      static int s_lastdeathsound = 0;
+      s_lastdeathsound = (s_lastdeathsound + 1) % 5;
+      return S_DIE1 + s_lastdeathsound;
+    }
+
     void deathstate(gameent *d, bool restore)
     {
         d->state = CS_DEAD;
@@ -370,14 +377,14 @@ namespace game
             d->attacking = ACT_IDLE;
             //d->pitch = 0;
             d->roll = 0;
-            playsound(S_DIE2);
+            playsound(randomdeathsound());
         }
         else
         {
             d->move = d->strafe = 0;
             d->resetinterp();
             d->smoothmillis = 0;
-            playsound(S_DIE1, &d->o);
+            playsound(randomdeathsound(), &d->o);
         }
     }
 
