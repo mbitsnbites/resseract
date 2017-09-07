@@ -266,9 +266,9 @@ namespace game
     bool allowedittoggle()
     {
         if(editmode) return true;
-        if(isconnected() && multiplayer(false) && !m_edit)
+        if(!m_edit)
         {
-            conoutf(CON_ERROR, "editing in multiplayer requires edit mode");
+            conoutf(CON_ERROR, "editing requires edit mode");
             return false;
         }
         return execidentbool("allowedittoggle", true);
