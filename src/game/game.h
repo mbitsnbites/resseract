@@ -244,9 +244,9 @@ static const int msgsizes[] =               // size inclusive message token, 0 f
     -1
 };
 
-#define RESSERACT_SERVER_PORT 42000
-#define RESSERACT_LANINFO_PORT 41998
-#define RESSERACT_MASTER_PORT 41999
+#define RESSERACT_SERVER_PORT 42010
+#define RESSERACT_LANINFO_PORT 42008
+#define RESSERACT_MASTER_PORT 42009
 #define PROTOCOL_VERSION 2              // bump when protocol changes
 #define DEMO_VERSION 1                  // bump when demo format changes
 #define DEMO_MAGIC "RESSERACT_DEMO\0\0"

@@ -10,6 +10,10 @@
 #include <signal.h>
 #include <enet/time.h>
 
+// Must match game/game.h.
+// TODO(m): Move into shared or something.
+#define RESSERACT_MASTER_PORT 42009
+
 #define INPUT_LIMIT 4096
 #define OUTPUT_LIMIT (64*1024)
 #define CLIENT_TIME (3*60*1000)
@@ -693,7 +697,7 @@ int main(int argc, char **argv)
     atexit(enet_deinitialize);
 
     const char *dir = "", *ip = NULL;
-    int port = 41999;
+    int port = RESSERACT_MASTER_PORT;
     if(argc>=2) dir = argv[1];
     if(argc>=3) port = atoi(argv[2]);
     if(argc>=4) ip = argv[3];

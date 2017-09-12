@@ -3559,8 +3559,8 @@ namespace server
     int laninfoport() { return RESSERACT_LANINFO_PORT; }
     int serverport() { return RESSERACT_SERVER_PORT; }
     const char *defaultmaster() {
-        // TODO(m): Use a custom Resseract server some day.
-        return "master.tesseract.gg";
+        // TODO(m): Use a custom Resseract server some day. This is just a dummy address.
+        return "master.resseract.foo";
     }
     int masterport() { return RESSERACT_MASTER_PORT; }
     int numchannels() { return 3; }
