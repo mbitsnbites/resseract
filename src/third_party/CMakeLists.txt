@@ -73,61 +73,62 @@ if(HAS_SOCKLEN_T)
   target_compile_definitions(enet PRIVATE -DHAS_SOCKLEN_T=1)
 endif()
 
-#-----------------------------------------------------------------------------
-# SDL2
-# Note: We'd like to use find_package here, but it doesn't support SDL2.
-#-----------------------------------------------------------------------------
-find_path(SDL2_INCLUDE_DIRS SDL.h
-    HINTS $ENV{SDL2}
-    PATH_SUFFIXES include/SDL2 include SDL2
-    PATHS
-    ~/Library/Frameworks
-    /Library/Frameworks
-    /usr/local/include/SDL2
-    /usr/include/SDL2
-    )
-find_path(SDL2_MIXER_INCLUDE_DIR SDL_mixer.h
-    HINTS $ENV{SDL2}
-    PATH_SUFFIXES include/SDL2 include SDL2
-    PATHS
-    ~/Library/Frameworks
-    /Library/Frameworks
-    /usr/local/include/SDL2
-    /usr/include/SDL2
-    )
-if(SDL2_MIXER_INCLUDE_DIR)
-  list(APPEND SDL2_INCLUDE_DIRS ${SDL2_MIXER_INCLUDE_DIR})
-endif()
-find_path(SDL2_IMAGE_INCLUDE_DIR SDL_image.h
-    HINTS $ENV{SDL2}
-    PATH_SUFFIXES include/SDL2 include SDL2
-    PATHS
-    ~/Library/Frameworks
-    /Library/Frameworks
-    /usr/local/include/SDL2
-    /usr/include/SDL2
-    )
-if(SDL2_IMAGE_INCLUDE_DIR)
-  list(APPEND SDL2_INCLUDE_DIRS ${SDL2_IMAGE_INCLUDE_DIR})
-endif()
-find_library(SDL2_LIBRARIES NAMES SDL2
-    HINTS $ENV{SDL2}
-    PATH_SUFFIXES lib64 lib)
-find_library(SDL2_MIXER_LIBRARY NAMES SDL2_mixer
-    HINTS $ENV{SDL2}
-    PATH_SUFFIXES lib64 lib)
-list(APPEND SDL2_LIBRARIES ${SDL2_MIXER_LIBRARY})
-find_library(SDL2_IMAGE_LIBRARY NAMES SDL2_image
-    HINTS $ENV{SDL2}
-    PATH_SUFFIXES lib64 lib)
-list(APPEND SDL2_LIBRARIES ${SDL2_IMAGE_LIBRARY})
-if(NOT APPLE)
-  find_library(SDL2MAIN_LIBRARY NAMES SDL2main
+if(RESSERACT_BUILD_CLIENT)
+  #-----------------------------------------------------------------------------
+  # SDL2
+  # Note: We'd like to use find_package here, but it doesn't support SDL2.
+  #-----------------------------------------------------------------------------
+  find_path(SDL2_INCLUDE_DIRS SDL.h
+      HINTS $ENV{SDL2}
+      PATH_SUFFIXES include/SDL2 include SDL2
+      PATHS
+      ~/Library/Frameworks
+      /Library/Frameworks
+      /usr/local/include/SDL2
+      /usr/include/SDL2
+      )
+  find_path(SDL2_MIXER_INCLUDE_DIR SDL_mixer.h
+      HINTS $ENV{SDL2}
+      PATH_SUFFIXES include/SDL2 include SDL2
+      PATHS
+      ~/Library/Frameworks
+      /Library/Frameworks
+      /usr/local/include/SDL2
+      /usr/include/SDL2
+      )
+  if(SDL2_MIXER_INCLUDE_DIR)
+    list(APPEND SDL2_INCLUDE_DIRS ${SDL2_MIXER_INCLUDE_DIR})
+  endif()
+  find_path(SDL2_IMAGE_INCLUDE_DIR SDL_image.h
+      HINTS $ENV{SDL2}
+      PATH_SUFFIXES include/SDL2 include SDL2
+      PATHS
+      ~/Library/Frameworks
+      /Library/Frameworks
+      /usr/local/include/SDL2
+      /usr/include/SDL2
+      )
+  if(SDL2_IMAGE_INCLUDE_DIR)
+    list(APPEND SDL2_INCLUDE_DIRS ${SDL2_IMAGE_INCLUDE_DIR})
+  endif()
+  find_library(SDL2_LIBRARIES NAMES SDL2
       HINTS $ENV{SDL2}
       PATH_SUFFIXES lib64 lib)
-  list(APPEND SDL2_LIBRARIES ${SDL2MAIN_LIBRARY})
+  find_library(SDL2_MIXER_LIBRARY NAMES SDL2_mixer
+      HINTS $ENV{SDL2}
+      PATH_SUFFIXES lib64 lib)
+  list(APPEND SDL2_LIBRARIES ${SDL2_MIXER_LIBRARY})
+  find_library(SDL2_IMAGE_LIBRARY NAMES SDL2_image
+      HINTS $ENV{SDL2}
+      PATH_SUFFIXES lib64 lib)
+  list(APPEND SDL2_LIBRARIES ${SDL2_IMAGE_LIBRARY})
+  if(NOT APPLE)
+    find_library(SDL2MAIN_LIBRARY NAMES SDL2main
+        HINTS $ENV{SDL2}
+        PATH_SUFFIXES lib64 lib)
+    list(APPEND SDL2_LIBRARIES ${SDL2MAIN_LIBRARY})
+  endif()
+  add_library(sdl2 INTERFACE)
+  target_include_directories(sdl2 INTERFACE ${SDL2_INCLUDE_DIRS})
+  target_link_libraries(sdl2 INTERFACE ${SDL2_LIBRARIES})
 endif()
-add_library(sdl2 INTERFACE)
-target_include_directories(sdl2 INTERFACE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(sdl2 INTERFACE ${SDL2_LIBRARIES})
-
