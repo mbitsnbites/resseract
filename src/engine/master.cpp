@@ -37,6 +37,14 @@ struct userinfo
 };
 hashnameset<userinfo> users;
 
+namespace
+{
+void showusage(const char *prgname)
+{
+    printf("Usage: %s [dir [port [ip]]\n", prgname);
+}
+}  // namespace
+
 void adduser(char *name, char *pubkey)
 {
     name = newstring(name);
@@ -693,6 +701,16 @@ void reloadsignal(int signum)
 
 int main(int argc, char **argv)
 {
+    // Show help?
+    for(int i = 1; i < argc; ++i)
+    {
+        if((strcmp(argv[i], "-h") == 0) || (strcmp(argv[i], "--help") == 0) || (strcmp(argv[i], "-?") == 0))
+        {
+            showusage(argv[0]);
+            exit(0);
+        }
+    }
+
     if(enet_initialize()<0) fatal("Unable to initialise network module");
     atexit(enet_deinitialize);
 
