@@ -100,3 +100,21 @@ Use CMake in the same way as for Linux.
 
 Not tested.
 
+# License
+
+From a licensing perspective, Resseract is divided into several different parts
+that use different licenses.
+
+The *game source code*, found in the ```src/``` folder, is released under the
+[zlib/libpng license](https://opensource.org/licenses/Zlib) (as reproduced in
+[LICENSE](LICENSE)).
+
+The *game data*, found in the ```data/``` folder, is released under many
+different licenses, since it is a combination of many different works by
+different authors. For more information, see the [data README](data/README.md).
+
+Resseract also makes use of third party libraries (including
+[ENet](http://enet.bespin.org) - see the
+[ENet license](src/third_party/enet/LICENSE)), which may be released under
+different licenses.
+
