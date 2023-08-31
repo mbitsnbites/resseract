@@ -1,3 +1,5 @@
+## ⚠️ This repository has moved to: https://gitlab.com/mbitsnbites/resseract
+
 ![Resseract](/doc/logo.jpg "Resseract")
 
 Resseract is a first-person shooter game focused on instagib deathmatch and capture-the-flag
